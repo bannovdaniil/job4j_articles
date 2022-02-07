@@ -38,4 +38,5 @@ public class ReplaceTest {
         String expected = "I am a Petr Arsentev, Who are you? ";
         assertThat(result, is(expected));
     }
+
 }
