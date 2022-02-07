@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ReplaceTest {
-    @Test
     public void whenTwoChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
@@ -18,7 +17,6 @@ public class ReplaceTest {
         assertThat(result, is(expected));
     }
 
-    @Test
     public void whenOneWordChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
@@ -27,7 +25,6 @@ public class ReplaceTest {
         assertThat(result, is(expected));
     }
 
-    @Test
     public void whenThreeWordChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
