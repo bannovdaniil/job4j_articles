@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.is;
 
 public class ReplaceTest {
     @Ignore
+    @Test
     public void whenTwoChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
@@ -20,6 +21,7 @@ public class ReplaceTest {
     }
 
     @Ignore
+    @Test(expected = IllegalArgumentException.class)
     public void whenOneWordChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
@@ -29,6 +31,7 @@ public class ReplaceTest {
     }
 
     @Ignore
+    @Test(expected = IllegalArgumentException.class)
     public void whenThreeWordChange() {
         Generator generator = new Replace();
         String result = generator.produce("I am a ${name}, Who are ${subject}? ",
@@ -38,5 +41,4 @@ public class ReplaceTest {
         String expected = "I am a Petr Arsentev, Who are you? ";
         assertThat(result, is(expected));
     }
-
 }
