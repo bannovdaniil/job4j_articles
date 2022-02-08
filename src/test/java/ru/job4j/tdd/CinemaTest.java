@@ -1,6 +1,7 @@
 package ru.job4j.tdd;
 
 import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 public class CinemaTest {
     @Ignore
+    @Test
     public void whenBuy() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -22,6 +24,7 @@ public class CinemaTest {
     }
 
     @Ignore
+    @Test
     public void whenFind() {
         Cinema cinema = new Cinema3D();
         cinema.add(new Session3D());
@@ -30,6 +33,7 @@ public class CinemaTest {
     }
 
     @Ignore
+    @Test
     public void whenNotFind() {
         Cinema cinema = new Cinema3D();
         cinema.add(new Session3D());
@@ -38,6 +42,7 @@ public class CinemaTest {
     }
 
     @Ignore
+    @Test(expected = IllegalArgumentException.class)
     public void whenBuyThenAbsent() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -49,6 +54,7 @@ public class CinemaTest {
     }
 
     @Ignore
+    @Test(expected = IllegalArgumentException.class)
     public void whenBuyThenWrongDate() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
