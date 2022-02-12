@@ -2,6 +2,7 @@ package ru.job4j.design.srp;
 
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class Employee {
     private String name;
@@ -12,7 +13,9 @@ public class Employee {
     public Employee(String name, Calendar hired, Calendar fired, double salary) {
         this.name = name;
         this.hired = hired;
+        this.hired.setTimeZone(TimeZone.getTimeZone("GMT-7"));
         this.fired = fired;
+        this.fired.setTimeZone(TimeZone.getTimeZone("GMT-7"));
         this.salary = salary;
     }
 

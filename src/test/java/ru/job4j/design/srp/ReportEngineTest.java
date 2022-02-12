@@ -2,6 +2,9 @@ package ru.job4j.design.srp;
 
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -115,8 +118,8 @@ public class ReportEngineTest {
         Report engine = new ReportXml(store);
         StringBuilder expect = new StringBuilder();
         expect.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<employees>\n    ")
-                .append("<employee>\n        <fired>2022-02-12T18:16:00+03:00</fired>\n        ")
-                .append("<hired>2022-02-12T18:16:00+03:00</hired>\n        <name>Ivan</name>\n        ")
+                .append("<employee>\n        <fired>2022-02-12T18:16:00-07:00</fired>\n        ")
+                .append("<hired>2022-02-12T18:16:00-07:00</hired>\n        <name>Ivan</name>\n        ")
                 .append("<salary>10.0</salary>\n    </employee>\n</employees>\n");
         assertThat(expect.toString(), is(engine.generate(em -> true)));
     }
