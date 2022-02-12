@@ -1,16 +1,9 @@
 package ru.job4j.design.srp;
 
-import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Calendar;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -98,45 +91,32 @@ public class ReportEngineTest {
     @Test
     public void whenJson() {
         MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
+        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12, 18, 16);
         Employee worker1 = new Employee("Ivan", now, now, 10);
-        Employee worker2 = new Employee("Fedr", now, now, 500);
         store.add(worker1);
-        store.add(worker2);
         Report engine = new ReportJson(store);
         StringBuilder expect = new StringBuilder();
-        expect.append("[")
-                .append(new GsonBuilder().create().toJson(worker1))
-                .append(",")
-                .append(new GsonBuilder().create().toJson(worker2))
-                .append("]");
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        expect.append("[{\"name\":\"Ivan\",\"hired\":")
+                .append("{\"year\":2022,\"month\":1,\"dayOfMonth\":12,\"hourOfDay\":18,\"minute\":16,\"second\":0},")
+                .append("\"fired\":")
+                .append("{\"year\":2022,\"month\":1,\"dayOfMonth\":12,\"hourOfDay\":18,\"minute\":16,\"second\":0}")
+                .append(",\"salary\":10.0}]");
+        assertThat(expect.toString(), is(engine.generate(em -> true)));
     }
 
     @Test
     public void whenXML() {
         MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
+        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12, 18, 16);
         Employee worker1 = new Employee("Ivan", now, now, 10);
-        Employee worker2 = new Employee("Fedr", now, now, 500);
         store.add(worker1);
-        store.add(worker2);
         Report engine = new ReportXml(store);
-        String expect = "";
-        try (StringWriter writer = new StringWriter()) {
-            JAXBContext context = JAXBContext.newInstance(ReportXml.Employees.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(new ReportXml.Employees(List.of(worker1, worker2)), writer);
-            expect = writer.getBuffer().toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PropertyException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        assertThat(engine.generate(em -> true), is(expect));
+        StringBuilder expect = new StringBuilder();
+        expect.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<employees>\n    ")
+                .append("<employee>\n        <fired>2022-02-12T18:16:00+03:00</fired>\n        ")
+                .append("<hired>2022-02-12T18:16:00+03:00</hired>\n        <name>Ivan</name>\n        ")
+                .append("<salary>10.0</salary>\n    </employee>\n</employees>\n");
+        assertThat(expect.toString(), is(engine.generate(em -> true)));
     }
 
 }
