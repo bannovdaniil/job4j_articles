@@ -91,7 +91,8 @@ public class ReportEngineTest {
     @Test
     public void whenJson() {
         MemStore store = new MemStore();
-        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12, 18, 16);
+        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12,
+                18, 16, 0);
         Employee worker1 = new Employee("Ivan", now, now, 10);
         store.add(worker1);
         Report engine = new ReportJson(store);
@@ -107,7 +108,8 @@ public class ReportEngineTest {
     @Test
     public void whenXML() {
         MemStore store = new MemStore();
-        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12, 18, 16);
+        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 12,
+                18, 16, 0);
         Employee worker1 = new Employee("Ivan", now, now, 10);
         store.add(worker1);
         Report engine = new ReportXml(store);
