@@ -18,7 +18,7 @@ public class Warehouse implements FoodStore {
     }
 
     public List<Food> getFoods() {
-        return foods;
+        return new ArrayList<>(foods);
     }
 
     @Override
