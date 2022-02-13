@@ -2,47 +2,33 @@ package ru.job4j.lspstore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ControllQuality {
-    private Shop shop;
-    private Trash trash;
-    private Warehouse warehouse;
+    private final List<FoodStore> foodStores;
 
     public ControllQuality(Shop shop, Trash trash, Warehouse warehouse) {
-        this.shop = shop;
-        this.trash = trash;
-        this.warehouse = warehouse;
+        foodStores = new ArrayList<>();
+        foodStores.add(shop);
+        foodStores.add(trash);
+        foodStores.add(warehouse);
     }
 
-    private void putFood(FoodStore store, Food food) {
-        store.putFood(food);
-    }
-
-    public void sortFood(double percent, Food food) {
-        System.out.println(percent);
-        if (percent <= 0) {
-            putFood(trash, food);
-        } else if (percent < 25) {
-            food.setDiscount(50);
-            putFood(shop, food);
-        } else if (percent >= 25 && percent <= 75) {
-            putFood(shop, food);
-        } else if (percent > 75) {
-            putFood(warehouse, food);
+    public void sortFood(Food food, Calendar checkDate, double discount) {
+        for (FoodStore foodStore : foodStores) {
+            System.out.println(foodStore.accept(food, checkDate, discount));
         }
     }
 
-    public Shop getShop() {
-        return shop;
+    public FoodStore getShop() {
+        return foodStores.get(0);
     }
 
-    public Trash getTrash() {
-        return trash;
+    public FoodStore getTrash() {
+        return foodStores.get(1);
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
+    public FoodStore getWarehouse() {
+        return foodStores.get(2);
     }
 }

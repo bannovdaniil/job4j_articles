@@ -61,6 +61,15 @@ public class Food {
         this.discount = discount;
     }
 
+    public double getPercent(Calendar checkDate) {
+        long dayBetween = expiryDate.getTimeInMillis() - checkDate.getTimeInMillis();
+        double allTime = expiryDate.getTimeInMillis() - createDate.getTimeInMillis();
+        if (allTime == 0) {
+            allTime = 0.0001D;
+        }
+        return dayBetween * 100.0 / allTime;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dfr = new SimpleDateFormat("yyyy-MM-dd");

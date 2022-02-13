@@ -16,28 +16,22 @@ import static org.hamcrest.Matchers.is;
 
 public class ControllQualityTest {
     private List<Food> foods;
-    private Shop shop;
-    private Trash trash;
-    private Warehouse warehouse;
     private ControllQuality controllQuality;
 
     @Before
     public void fillFoodArray() {
-        shop = new Shop();
-        trash = new Trash();
-        warehouse = new Warehouse();
-        controllQuality = new ControllQuality(shop, trash, warehouse);
+        controllQuality = new ControllQuality(new Shop(), new Trash(), new Warehouse());
         foods = new ArrayList<>();
         foods.add(new Food("Свекла",
-                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 01),
-                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 02),
+                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
+                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 2),
                 10, 0));
         foods.add(new Food("Колбаса",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 30),
-                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 01),
+                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 1),
                 10, 0));
         foods.add(new Food("Сыр",
-                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 01),
+                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 22),
                 10, 0));
         foods.add(new Food("Виноград",
@@ -45,11 +39,11 @@ public class ControllQualityTest {
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 10),
                 10, 0));
         foods.add(new Food("Апельсин",
-                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 01),
-                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 04),
+                new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
+                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 4),
                 10, 0));
         foods.add(new Food("Апельсин",
-                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 02),
+                new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 2),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 10),
                 10, 0));
     }
@@ -57,72 +51,49 @@ public class ControllQualityTest {
     @After
     public void showArray() {
         System.out.println("shop");
-        controllQuality.getShop().foods.forEach(System.out::println);
+        controllQuality.getShop().getFoods().forEach(System.out::println);
         System.out.println("trash");
-        controllQuality.getTrash().foods.forEach(System.out::println);
+        controllQuality.getTrash().getFoods().forEach(System.out::println);
         System.out.println("ware");
-        controllQuality.getWarehouse().foods.forEach(System.out::println);
+        controllQuality.getWarehouse().getFoods().forEach(System.out::println);
     }
 
     @Test
     public void whenDateExpiredTwoFoodInTrash() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
         for (Food food : foods) {
-            Calendar dateExpired = food.getExpiryDate();
-            long dayBetween = dateExpired.getTimeInMillis() - checkDate.getTimeInMillis();
-            double allTime = dateExpired.getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-            if (allTime == 0) {
-                allTime = 0.0001D;
-            }
-            controllQuality.sortFood(dayBetween * 100.0 / allTime, food);
+            controllQuality.sortFood(food, checkDate, 50);
         }
-        assertThat(2, is(controllQuality.getTrash().foods.size()));
+
+        assertThat(2, is(controllQuality.getTrash().getFoods().size()));
     }
 
     @Test
     public void whenDateTwentyFiveThenOneFoodInWarehouse() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
         for (Food food : foods) {
-            Calendar dateExpired = food.getExpiryDate();
-            long dayBetween = dateExpired.getTimeInMillis() - checkDate.getTimeInMillis();
-            double allTime = dateExpired.getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-            if (allTime == 0) {
-                allTime = 0.0001D;
-            }
-            controllQuality.sortFood(dayBetween * 100.0 / allTime, food);
+            controllQuality.sortFood(food, checkDate, 50);
         }
-        assertThat(1, is(controllQuality.getWarehouse().foods.size()));
+        assertThat(1, is(controllQuality.getWarehouse().getFoods().size()));
     }
 
     @Test
     public void whenDateSeventyFiveThenDiscount() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
+        double discount = 50;
         for (Food food : foods) {
-            Calendar dateExpired = food.getExpiryDate();
-            long dayBetween = dateExpired.getTimeInMillis() - checkDate.getTimeInMillis();
-            double allTime = dateExpired.getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-            if (allTime == 0) {
-                allTime = 0.0001D;
-            }
-            controllQuality.sortFood(dayBetween * 100.0 / allTime, food);
+            controllQuality.sortFood(food, checkDate, discount);
         }
-        double discount = controllQuality.getShop().foods.get(1).getDiscount();
         assertThat(50.0, closeTo(discount, 0.001));
     }
 
     @Test
     public void whenDateBetweenThenOutDiscount() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
+        double discount = 0;
         for (Food food : foods) {
-            Calendar dateExpired = food.getExpiryDate();
-            long dayBetween = dateExpired.getTimeInMillis() - checkDate.getTimeInMillis();
-            double allTime = dateExpired.getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-            if (allTime == 0) {
-                allTime = 0.0001D;
-            }
-            controllQuality.sortFood(dayBetween * 100.0 / allTime, food);
+            controllQuality.sortFood(food, checkDate, discount);
         }
-        double discount = controllQuality.getShop().foods.get(0).getDiscount();
         assertThat(0.0, closeTo(discount, 0.001));
     }
 
@@ -130,15 +101,9 @@ public class ControllQualityTest {
     public void whenDateOkThenThreeInShop() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
         for (Food food : foods) {
-            Calendar dateExpired = food.getExpiryDate();
-            long dayBetween = dateExpired.getTimeInMillis() - checkDate.getTimeInMillis();
-            double allTime = dateExpired.getTimeInMillis() - food.getCreateDate().getTimeInMillis();
-            if (allTime == 0) {
-                allTime = 0.0001D;
-            }
-            controllQuality.sortFood(dayBetween * 100.0 / allTime, food);
+            controllQuality.sortFood(food, checkDate, 50);
         }
-        assertThat(3, is(controllQuality.getShop().foods.size()));
+        assertThat(3, is(controllQuality.getShop().getFoods().size()));
     }
 
 }
