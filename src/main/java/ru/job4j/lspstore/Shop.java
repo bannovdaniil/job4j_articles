@@ -22,11 +22,6 @@ public class Shop implements FoodStore {
     }
 
     @Override
-    public void putFood(Food food) {
-        foods.add(food);
-    }
-
-    @Override
     public boolean accept(Food food, Calendar checkDate, double discount) {
         boolean result = false;
         double percent = food.getPercent(checkDate);

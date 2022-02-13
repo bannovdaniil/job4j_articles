@@ -33,9 +33,4 @@ public class Trash implements FoodStore {
         return result;
     }
 
-    @Override
-    public void putFood(Food food) {
-        foods.add(food);
-    }
-
 }

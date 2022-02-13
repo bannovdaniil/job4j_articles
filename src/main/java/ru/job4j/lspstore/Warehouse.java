@@ -34,9 +34,4 @@ public class Warehouse implements FoodStore {
 
     }
 
-    @Override
-    public void putFood(Food food) {
-        foods.add(food);
-    }
-
 }
