@@ -62,8 +62,8 @@ public class Food {
     }
 
     public double getPercent(Calendar checkDate) {
-        long dayBetween = expiryDate.getTimeInMillis() - checkDate.getTimeInMillis();
-        double allTime = expiryDate.getTimeInMillis() - createDate.getTimeInMillis();
+        long dayBetween = createDate.getTimeInMillis() - checkDate.getTimeInMillis();
+        double allTime = createDate.getTimeInMillis() - expiryDate.getTimeInMillis();
         if (allTime == 0) {
             allTime = 0.0001D;
         }

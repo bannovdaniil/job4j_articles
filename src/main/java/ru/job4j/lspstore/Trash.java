@@ -12,9 +12,8 @@ public class Trash implements FoodStore {
     }
 
     @Override
-    public Food removeFood(Food food) {
+    public void removeFood(Food food) {
         foods.remove(food);
-        return food;
     }
 
     public List<Food> getFoods() {
@@ -22,15 +21,12 @@ public class Trash implements FoodStore {
     }
 
     @Override
-    public boolean accept(Food food, Calendar checkDate, double discount) {
-        boolean result = false;
+    public void putFood(Food food, Calendar checkDate) {
         double percent = food.getPercent(checkDate);
         System.out.println(percent);
-        if (percent <= 0) {
+        if (percent > 100) {
             foods.add(food);
-            result = true;
         }
-        return result;
     }
 
 }

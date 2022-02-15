@@ -16,7 +16,7 @@ public class ControllQuality {
 
     public void sortFood(Food food, Calendar checkDate, double discount) {
         for (FoodStore foodStore : foodStores) {
-            System.out.println(foodStore.accept(food, checkDate, discount));
+           foodStore.putFood(food, checkDate);
         }
     }
 

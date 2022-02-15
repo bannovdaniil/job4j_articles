@@ -20,7 +20,7 @@ public class ControllQualityTest {
 
     @Before
     public void fillFoodArray() {
-        controllQuality = new ControllQuality(new Shop(), new Trash(), new Warehouse());
+        controllQuality = new ControllQuality(new Shop(50.0D), new Trash(), new Warehouse());
         foods = new ArrayList<>();
         foods.add(new Food("Свекла",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
