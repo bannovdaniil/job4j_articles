@@ -1,10 +1,17 @@
 package ru.job4j.park;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkTransport implements Park {
+    List<Transport> trucks;
+    List<Transport> sedans;
     private int truckPlace;
     private int sedanPlace;
 
     public ParkTransport(int truckPlace, int sedanPlace) {
+        trucks = new ArrayList<>();
+        sedans = new ArrayList<>();
         this.truckPlace = truckPlace;
         this.sedanPlace = sedanPlace;
     }
@@ -12,6 +19,11 @@ public class ParkTransport implements Park {
     @Override
     public boolean addTransport(Transport transport) {
         return false;
+    }
+
+    @Override
+    public int getPlace() {
+        return truckPlace + sedanPlace;
     }
 
     @Override
