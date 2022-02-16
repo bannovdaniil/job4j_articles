@@ -1,15 +1,12 @@
 package ru.job4j.park;
 
 public interface Park {
-    boolean parkSedan();
-
-    boolean parkTruck();
+    boolean addTransport(Transport transport);
 
     int getSedanPlace();
 
     int getTruckPlace();
 
-    boolean removeSedan();
+    boolean removeTransport(Transport transport);
 
-    boolean removeTruck();
 }

@@ -6,6 +6,9 @@ package ru.job4j.srp;
 public class Sedan implements Car {
     private int fuel = 0;
 
+    public Sedan(String name) {
+    }
+
     @Override
     public void beep() {
         System.out.println("Bi-Bip");
