@@ -1,6 +1,7 @@
 package ru.job4j.park;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ParkTransportTest {
         park = new ParkTransport(truckPlace, sedanPlace);
     }
 
+    @Ignore
     @Test
     public void whenOneSedanOneTruckThenTwo() {
         int expected = 2;
@@ -35,6 +37,7 @@ public class ParkTransportTest {
         assertEquals(expected, result);
     }
 
+    @Ignore
     @Test
     public void whenOneSedanThenFore() {
         int expected = 4;
@@ -46,6 +49,7 @@ public class ParkTransportTest {
         assertEquals(expected, result);
     }
 
+    @Ignore
     @Test
     public void whenTwoTruckThenOne() {
         int expected = 1;
@@ -59,6 +63,7 @@ public class ParkTransportTest {
         assertEquals(expected, result);
     }
 
+    @Ignore
     @Test
     public void whenTwoTruckOneSedanThenZero() {
         int expected = 0;
