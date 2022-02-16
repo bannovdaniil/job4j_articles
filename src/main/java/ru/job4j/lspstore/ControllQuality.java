@@ -14,9 +14,11 @@ public class ControllQuality {
         foodStores.add(warehouse);
     }
 
-    public void sortFood(Food food, Calendar checkDate, double discount) {
+    public void sortFood(List<Food> foods, Calendar checkDate) {
         for (FoodStore foodStore : foodStores) {
-           foodStore.putFood(food, checkDate);
+            for (Food food : foods) {
+                foodStore.putFood(food, checkDate);
+            }
         }
     }
 

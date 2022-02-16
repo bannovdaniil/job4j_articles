@@ -21,12 +21,15 @@ public class Warehouse implements FoodStore {
     }
 
     @Override
-    public void putFood(Food food, Calendar checkDate) {
+    public boolean putFood(Food food, Calendar checkDate) {
+        boolean result = false;
         double percent = food.getPercent(checkDate);
         System.out.println(percent);
         if (percent < 25) {
             foods.add(food);
+            result = true;
         }
+        return result;
     }
 
 }

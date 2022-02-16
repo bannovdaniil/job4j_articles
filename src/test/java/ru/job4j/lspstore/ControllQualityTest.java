@@ -20,32 +20,32 @@ public class ControllQualityTest {
 
     @Before
     public void fillFoodArray() {
-        controllQuality = new ControllQuality(new Shop(50.0D), new Trash(), new Warehouse());
+        controllQuality = new ControllQuality(new Shop(), new Trash(), new Warehouse());
         foods = new ArrayList<>();
         foods.add(new Food("Свекла",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 2),
-                10, 0));
+                10, 50));
         foods.add(new Food("Колбаса",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 30),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 1),
-                10, 0));
+                10, 50));
         foods.add(new Food("Сыр",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 22),
-                10, 0));
+                10, 50));
         foods.add(new Food("Виноград",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 10),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 10),
-                10, 0));
+                10, 50));
         foods.add(new Food("Апельсин",
                 new GregorianCalendar(2022, GregorianCalendar.JANUARY, 1),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 4),
-                10, 0));
+                10, 50));
         foods.add(new Food("Апельсин",
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 2),
                 new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 10),
-                10, 0));
+                10, 50));
     }
 
     @After
@@ -61,48 +61,39 @@ public class ControllQualityTest {
     @Test
     public void whenDateExpiredTwoFoodInTrash() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
-        for (Food food : foods) {
-            controllQuality.sortFood(food, checkDate, 50);
-        }
-
+        controllQuality.sortFood(foods, checkDate);
         assertThat(2, is(controllQuality.getTrash().getFoods().size()));
     }
 
     @Test
     public void whenDateTwentyFiveThenOneFoodInWarehouse() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
-        for (Food food : foods) {
-            controllQuality.sortFood(food, checkDate, 50);
-        }
+        controllQuality.sortFood(foods, checkDate);
         assertThat(1, is(controllQuality.getWarehouse().getFoods().size()));
     }
 
     @Test
     public void whenDateSeventyFiveThenDiscount() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
-        double discount = 50;
-        for (Food food : foods) {
-            controllQuality.sortFood(food, checkDate, discount);
-        }
-        assertThat(50.0, closeTo(discount, 0.001));
+        double expected = 5.0;
+        controllQuality.sortFood(foods, checkDate);
+        Food result = controllQuality.getShop().getFoods().get(1);
+        assertThat(expected, closeTo(result.getPrice(), 0.001));
     }
 
     @Test
     public void whenDateBetweenThenOutDiscount() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
-        double discount = 0;
-        for (Food food : foods) {
-            controllQuality.sortFood(food, checkDate, discount);
-        }
-        assertThat(0.0, closeTo(discount, 0.001));
+        double expected = 10.0;
+        controllQuality.sortFood(foods, checkDate);
+        Food result = controllQuality.getShop().getFoods().get(0);
+        assertThat(expected, closeTo(result.getPrice(), 0.001));
     }
 
     @Test
     public void whenDateOkThenThreeInShop() {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
-        for (Food food : foods) {
-            controllQuality.sortFood(food, checkDate, 50);
-        }
+        controllQuality.sortFood(foods, checkDate);
         assertThat(3, is(controllQuality.getShop().getFoods().size()));
     }
 

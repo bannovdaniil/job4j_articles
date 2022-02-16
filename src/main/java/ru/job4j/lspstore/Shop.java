@@ -6,16 +6,11 @@ import java.util.List;
 
 public class Shop implements FoodStore {
     private final List<Food> foods;
-    private double discount;
 
-    public Shop(double discount) {
-        this.discount = discount;
+    public Shop() {
         this.foods = new ArrayList<>();
     }
 
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
 
     @Override
     public void removeFood(Food food) {
@@ -27,15 +22,19 @@ public class Shop implements FoodStore {
     }
 
     @Override
-    public void putFood(Food food, Calendar checkDate) {
+    public boolean putFood(Food food, Calendar checkDate) {
+        boolean result = false;
         double percent = food.getPercent(checkDate);
         System.out.println(percent);
         if (percent >= 25 && percent <= 75) {
             foods.add(food);
+            result = true;
         } else if (percent > 75 && percent < 100) {
-            food.setDiscount(discount);
+            food.setPrice(food.getPrice() * food.getDiscount() / 100);
             foods.add(food);
+            result = true;
         }
+        return result;
     }
 
 }
