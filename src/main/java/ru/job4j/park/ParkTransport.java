@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkTransport implements Park {
+    private int size;
     List<Transport> trucks;
     List<Transport> sedans;
     private int truckPlace;
@@ -14,6 +15,7 @@ public class ParkTransport implements Park {
         sedans = new ArrayList<>();
         this.truckPlace = truckPlace;
         this.sedanPlace = sedanPlace;
+        this.size = truckPlace + sedanPlace;
     }
 
     @Override
@@ -23,21 +25,27 @@ public class ParkTransport implements Park {
 
     @Override
     public int getPlace() {
-        return truckPlace + sedanPlace;
+        return size - (truckPlace + sedanPlace);
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override
     public int getSedanPlace() {
-        return 0;
+        return sedanPlace;
     }
 
     @Override
     public int getTruckPlace() {
-        return 0;
+        return truckPlace;
     }
 
     @Override
     public boolean removeTransport(Transport transport) {
         return false;
     }
+
+
 }

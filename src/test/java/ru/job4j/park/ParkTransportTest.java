@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ParkTransportTest {
     private List<Transport> transports;
     private Park park;
-    private int truckPlace = 3;
+    private int truckPlace = 2;
     private int sedanPlace = 1;
 
     @Before
@@ -23,13 +23,52 @@ public class ParkTransportTest {
     }
 
     @Test
-    public void OneCar() {
-        int expected = 1;
-        Transport tracks1 = new Track("name");
-        Transport sedans1 = new Sedan("name");
+    public void whenOneSedanOneTruckThenTwo() {
+        int expected = 2;
+        Transport track1 = new Track("tr1");
+        Transport sedan1 = new Sedan("sd1");
 
-        park.addTransport(tracks1);
-        park.addTransport(sedans1);
+        park.addTransport(track1);
+        park.addTransport(sedan1);
+        int result = park.getSedanPlace();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void whenOneSedanThenFore() {
+        int expected = 4;
+        Transport sedan1 = new Sedan("sd1");
+
+        park.addTransport(sedan1);
+        int result = park.getSedanPlace();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void whenTwoTruckThenOne() {
+        int expected = 1;
+        Transport track1 = new Track("tr2");
+        Transport track2 = new Sedan("tr2");
+
+        park.addTransport(track1);
+        park.addTransport(track2);
+        int result = park.getSedanPlace();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void whenTwoTruckOneSedanThenZero() {
+        int expected = 0;
+        Transport track1 = new Track("tr2");
+        Transport track2 = new Sedan("tr2");
+        Transport sedan1 = new Sedan("sd1");
+
+        park.addTransport(track1);
+        park.addTransport(track2);
+        park.addTransport(sedan1);
         int result = park.getSedanPlace();
 
         assertEquals(expected, result);

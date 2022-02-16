@@ -10,5 +10,4 @@ public interface Park {
     int getTruckPlace();
 
     boolean removeTransport(Transport transport);
-
 }
