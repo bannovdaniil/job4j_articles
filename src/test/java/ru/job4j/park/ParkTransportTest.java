@@ -27,13 +27,11 @@ public class ParkTransportTest {
     @Test
     public void whenOneSedanOneTruckThenTwo() {
         int expected = 2;
-        Transport track1 = new Track("tr1");
+        Transport track1 = new Truck("tr1");
         Transport sedan1 = new Sedan("sd1");
-
         park.addTransport(track1);
         park.addTransport(sedan1);
         int result = park.getSedanPlace();
-
         assertEquals(expected, result);
     }
 
@@ -42,10 +40,8 @@ public class ParkTransportTest {
     public void whenOneSedanThenFore() {
         int expected = 4;
         Transport sedan1 = new Sedan("sd1");
-
         park.addTransport(sedan1);
         int result = park.getSedanPlace();
-
         assertEquals(expected, result);
     }
 
@@ -53,13 +49,11 @@ public class ParkTransportTest {
     @Test
     public void whenTwoTruckThenOne() {
         int expected = 1;
-        Transport track1 = new Track("tr2");
+        Transport track1 = new Truck("tr2");
         Transport track2 = new Sedan("tr2");
-
         park.addTransport(track1);
         park.addTransport(track2);
         int result = park.getSedanPlace();
-
         assertEquals(expected, result);
     }
 
@@ -67,16 +61,39 @@ public class ParkTransportTest {
     @Test
     public void whenTwoTruckOneSedanThenZero() {
         int expected = 0;
-        Transport track1 = new Track("tr2");
+        Transport track1 = new Truck("tr2");
         Transport track2 = new Sedan("tr2");
         Transport sedan1 = new Sedan("sd1");
-
         park.addTransport(track1);
         park.addTransport(track2);
         park.addTransport(sedan1);
         int result = park.getSedanPlace();
-
         assertEquals(expected, result);
+    }
+
+    @Ignore
+    @Test
+    public void whenMoreThenPlaceThenFalse() {
+        Transport track1 = new Truck("tr2");
+        Transport track2 = new Sedan("tr2");
+        Transport sedan1 = new Sedan("sd1");
+        park.addTransport(track1);
+        park.addTransport(track2);
+        park.addTransport(sedan1);
+        int result = park.getSedanPlace();
+        assertFalse(park.addTransport(sedan1));
+    }
+
+    @Ignore
+    @Test
+    public void whenLessThenTrue() {
+        Transport track1 = new Truck("tr2");
+        Transport track2 = new Sedan("tr2");
+        Transport sedan1 = new Sedan("sd1");
+        park.addTransport(track1);
+        park.addTransport(track2);
+        int result = park.getSedanPlace();
+        assertTrue(park.addTransport(sedan1));
     }
 
 }
