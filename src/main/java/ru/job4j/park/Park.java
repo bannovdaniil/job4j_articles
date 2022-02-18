@@ -3,11 +3,7 @@ package ru.job4j.park;
 public interface Park {
     boolean addTransport(Transport transport);
 
-    int getPlace();
-
-    int getSedanPlace();
-
-    int getTruckPlace();
+    ParkTransport.ParkingInfo getParkInfo();
 
     boolean removeTransport(Transport transport);
 }

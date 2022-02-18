@@ -5,12 +5,14 @@ import java.util.List;
 
 public class ParkTransport implements Park {
     private int size;
-    List<Transport> trucks;
-    List<Transport> sedans;
+    private List<Transport> trucks;
+    private List<Transport> sedans;
     private int truckPlace;
     private int sedanPlace;
+    ParkingInfo parkingInfo;
 
     public ParkTransport(int truckPlace, int sedanPlace) {
+        ParkingInfo parkingInfo = new ParkingInfo();
         trucks = new ArrayList<>();
         sedans = new ArrayList<>();
         this.truckPlace = truckPlace;
@@ -18,34 +20,37 @@ public class ParkTransport implements Park {
         this.size = truckPlace + sedanPlace;
     }
 
+    public ParkingInfo getParkInfo() {
+        return parkingInfo;
+    }
+
     @Override
     public boolean addTransport(Transport transport) {
         return false;
     }
 
-    @Override
-    public int getPlace() {
-        return size - (truckPlace + sedanPlace);
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    @Override
-    public int getSedanPlace() {
-        return sedanPlace;
-    }
-
-    @Override
-    public int getTruckPlace() {
-        return truckPlace;
-    }
 
     @Override
     public boolean removeTransport(Transport transport) {
         return false;
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public class ParkingInfo {
+        public int getPlace() {
+            return size - (truckPlace + sedanPlace);
+        }
+
+        public int getSedanPlace() {
+            return sedanPlace;
+        }
+
+        public int getTruckPlace() {
+            return truckPlace;
+        }
+    }
 
 }

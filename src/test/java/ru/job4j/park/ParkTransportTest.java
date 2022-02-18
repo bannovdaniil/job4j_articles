@@ -31,7 +31,7 @@ public class ParkTransportTest {
         Transport sedan1 = new Sedan("sd1");
         park.addTransport(track1);
         park.addTransport(sedan1);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertEquals(expected, result);
     }
 
@@ -41,7 +41,7 @@ public class ParkTransportTest {
         int expected = 4;
         Transport sedan1 = new Sedan("sd1");
         park.addTransport(sedan1);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertEquals(expected, result);
     }
 
@@ -53,7 +53,7 @@ public class ParkTransportTest {
         Transport track2 = new Sedan("tr2");
         park.addTransport(track1);
         park.addTransport(track2);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertEquals(expected, result);
     }
 
@@ -67,7 +67,7 @@ public class ParkTransportTest {
         park.addTransport(track1);
         park.addTransport(track2);
         park.addTransport(sedan1);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertEquals(expected, result);
     }
 
@@ -80,7 +80,7 @@ public class ParkTransportTest {
         park.addTransport(track1);
         park.addTransport(track2);
         park.addTransport(sedan1);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertFalse(park.addTransport(sedan1));
     }
 
@@ -92,7 +92,7 @@ public class ParkTransportTest {
         Transport sedan1 = new Sedan("sd1");
         park.addTransport(track1);
         park.addTransport(track2);
-        int result = park.getSedanPlace();
+        int result = park.getParkInfo().getSedanPlace();
         assertTrue(park.addTransport(sedan1));
     }
 
