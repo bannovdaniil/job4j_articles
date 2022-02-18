@@ -18,11 +18,7 @@ public class Truck implements Transport {
 
     @Override
     public int getSize() {
-        return 0;
+        return size;
     }
 
-    @Override
-    public boolean isPark() {
-        return false;
-    }
 }
