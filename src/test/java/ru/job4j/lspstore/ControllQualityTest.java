@@ -56,6 +56,7 @@ public class ControllQualityTest {
         controllQuality.getTrash().getFoods().forEach(System.out::println);
         System.out.println("ware");
         controllQuality.getWarehouse().getFoods().forEach(System.out::println);
+        System.out.println("-".repeat(20));
     }
 
     @Test
@@ -95,6 +96,16 @@ public class ControllQualityTest {
         Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
         controllQuality.sortFood(foods, checkDate);
         assertThat(3, is(controllQuality.getShop().getFoods().size()));
+    }
+
+    @Test
+    public void whenDateOkThenThreeInShopWhenResortThenSix() {
+        Calendar checkDate = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 3);
+        controllQuality.sortFood(foods, checkDate);
+        assertThat(3, is(controllQuality.getShop().getFoods().size()));
+        Calendar checkDateResort = new GregorianCalendar(2022, GregorianCalendar.FEBRUARY, 11);
+        controllQuality.resort(checkDateResort);
+        assertThat(1, is(controllQuality.getShop().getFoods().size()));
     }
 
 }

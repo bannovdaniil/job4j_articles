@@ -14,6 +14,17 @@ public class ControllQuality {
         foodStores.add(warehouse);
     }
 
+    public void resort(Calendar checkDate) {
+        List<Food> foods = new ArrayList<>();
+        for (FoodStore foodStore : foodStores) {
+            for (Food food : foodStore.getFoods()) {
+                foods.add(food);
+                foodStore.removeFood(food);
+            }
+        }
+        sortFood(foods, checkDate);
+    }
+
     public void sortFood(List<Food> foods, Calendar checkDate) {
         for (FoodStore foodStore : foodStores) {
             for (Food food : foods) {

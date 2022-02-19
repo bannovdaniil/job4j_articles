@@ -25,7 +25,6 @@ public class Shop implements FoodStore {
     public boolean putFood(Food food, Calendar checkDate) {
         boolean result = false;
         double percent = food.getPercent(checkDate);
-        System.out.println(percent);
         if (percent >= 25 && percent <= 75) {
             foods.add(food);
             result = true;

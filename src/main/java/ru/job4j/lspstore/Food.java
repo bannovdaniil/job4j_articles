@@ -78,4 +78,44 @@ public class Food {
                 + ", price=" + price
                 + ", discount=" + discount + '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Food food = (Food) o;
+
+        if (Double.compare(food.price, price) != 0) {
+            return false;
+        }
+        if (Double.compare(food.discount, discount) != 0) {
+            return false;
+        }
+        if (name != null ? !name.equals(food.name) : food.name != null) {
+            return false;
+        }
+        if (createDate != null ? !createDate.equals(food.createDate) : food.createDate != null) {
+            return false;
+        }
+        return expiryDate != null ? expiryDate.equals(food.expiryDate) : food.expiryDate == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
+        result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(discount);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
