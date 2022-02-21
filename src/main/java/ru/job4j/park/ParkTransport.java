@@ -20,20 +20,13 @@ public class ParkTransport implements Park {
     public boolean addTransport(Transport transport) {
         boolean result = false;
         int size = transport.getSize();
-        switch (transport.getType()) {
-            case SEDAN:
-                if (getSedanPlace() - size >= 0) {
-                    sedans.add(transport);
-                    result = true;
-                    break;
-                }
-            case TRUCK:
-                if (getTruckPlace() - size >= 0) {
-                    trucks.add(transport);
-                    result = true;
-                }
-                break;
-            default:
+
+        if (size <= 1 && getSedanPlace() - size >= 0) {
+            sedans.add(transport);
+            result = true;
+        } else if (getTruckPlace() - size >= 0) {
+            trucks.add(transport);
+            result = true;
         }
         return result;
     }
@@ -41,25 +34,19 @@ public class ParkTransport implements Park {
     @Override
     public boolean removeTransport(Transport transport) {
         boolean result = false;
-        switch (transport.getType()) {
-            case SEDAN:
-                for (int i = 0; i < sedans.size(); i++) {
-                    if (transport.equals(sedans.get(i))) {
-                        sedans.remove(i);
-                        result = true;
-                        break;
-                    }
-                }
-            case TRUCK:
-                for (int i = 0; i < trucks.size(); i++) {
-                    if (transport.equals(trucks.get(i))) {
-                        trucks.remove(i);
-                        result = true;
-                        break;
-                    }
-                }
+        for (int i = 0; i < sedans.size(); i++) {
+            if (transport.equals(sedans.get(i))) {
+                sedans.remove(i);
+                result = true;
                 break;
-            default:
+            }
+        }
+        for (int i = 0; i < trucks.size(); i++) {
+            if (transport.equals(trucks.get(i))) {
+                trucks.remove(i);
+                result = true;
+                break;
+            }
         }
         return result;
     }
