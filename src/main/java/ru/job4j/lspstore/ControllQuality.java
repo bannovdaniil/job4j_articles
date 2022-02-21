@@ -19,8 +19,8 @@ public class ControllQuality {
         for (FoodStore foodStore : foodStores) {
             for (Food food : foodStore.getFoods()) {
                 foods.add(food);
-                foodStore.removeFood(food);
             }
+            foodStore.clearFoodsList();
         }
         sortFood(foods, checkDate);
     }

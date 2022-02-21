@@ -17,6 +17,11 @@ public class Shop implements FoodStore {
         foods.remove(food);
     }
 
+    @Override
+    public void clearFoodsList() {
+        foods.clear();
+    }
+
     public List<Food> getFoods() {
         return new ArrayList<>(foods);
     }
