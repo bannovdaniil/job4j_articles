@@ -17,9 +17,7 @@ public class ControllQuality {
     public void resort(Calendar checkDate) {
         List<Food> foods = new ArrayList<>();
         for (FoodStore foodStore : foodStores) {
-            for (Food food : foodStore.getFoods()) {
-                foods.add(food);
-            }
+            foods.addAll(foodStore.getFoods());
             foodStore.clearFoodsList();
         }
         sortFood(foods, checkDate);
