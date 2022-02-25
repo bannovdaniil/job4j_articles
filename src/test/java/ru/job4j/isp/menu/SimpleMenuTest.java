@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 public class SimpleMenuTest {
     public static final ActionDelegate STUB_ACTION = System.out::println;
 
-    @Ignore
     @Test
     public void whenAddThenReturnSame() {
         Menu menu = new SimpleMenu();

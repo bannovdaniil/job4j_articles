@@ -7,57 +7,65 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
+//        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         boolean result = false;
-        MenuItem element = new Item(parentName, childName, actionDelegate);
-        if (!rootElements.contains(element)) {
-            rootElements.add(element);
-            result = true;
+        if (Menu.ROOT.equals(parentName)) {
+            result = rootElements.add(new Item(childName, actionDelegate));
+        } else {
+            Optional<ItemInfo> itemInfo = findItem(parentName);
+            if (itemInfo.isPresent()) {
+                Item item = (Item) itemInfo.get().menuItem;
+                result = item.addSubItem(parentName, childName, actionDelegate);
+            }
         }
         return result;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> info = Optional.ofNullable(null);
-        for (MenuItem element : rootElements) {
-            if (element.getName().equals(itemName)) {
-                info = Optional.ofNullable(null);
-            }
-            for (var children : element.getChildren()) {
-                info = Optional.ofNullable(null);
-            }
+        Optional<ItemInfo> itemInfo = findItem(itemName);
+        if (itemInfo.isPresent()) {
+            MenuItemInfo menuItemInfo = new MenuItemInfo(itemInfo.get().menuItem, itemInfo.get().number);
+            return Optional.ofNullable(menuItemInfo);
         }
-        return info;
+        return Optional.ofNullable(null);
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        return null;
+        return new Iterator<>() {
+            private final DFSIterator dfsIterator = new DFSIterator();
+
+            @Override
+            public boolean hasNext() {
+                return dfsIterator.hasNext();
+            }
+
+            @Override
+            public MenuItemInfo next() {
+                ItemInfo itemInfo = dfsIterator.next();
+                return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
+            }
+        };
     }
 
     private Optional<ItemInfo> findItem(String name) {
-        Optional<ItemInfo> info = Optional.ofNullable(null);
-        for (MenuItem element : rootElements) {
-            if (element.getName().equals(name)) {
-                info = getItemInfo(element);
-            }
-            for (var children : element.getChildren()) {
-                info = getItemInfo(children);
+        DFSIterator dfsIterator = new DFSIterator();
+        ItemInfo returnItemInfo = null;
+        while (dfsIterator.hasNext()) {
+            ItemInfo itemInfo = dfsIterator.next();
+            if (name.equals(itemInfo.menuItem.getParentName())) {
+                returnItemInfo = itemInfo;
+                break;
             }
         }
-        return info;
-    }
-
-    private Optional<ItemInfo> getItemInfo(MenuItem element) {
-        String[] number = element.getName().split(".");
-        return Optional.ofNullable(new ItemInfo(element, number[0]));
+        return Optional.ofNullable(returnItemInfo);
     }
 
     private static class SimpleMenuItem implements MenuItem {
-
-        private String name;
-        private List<MenuItem> children = new ArrayList<>();
-        private ActionDelegate actionDelegate;
+        private final String name;
+        private final List<MenuItem> children = new ArrayList<>();
+        private final ActionDelegate actionDelegate;
 
         public SimpleMenuItem(String name, ActionDelegate actionDelegate) {
             this.name = name;
@@ -65,7 +73,7 @@ public class SimpleMenu implements Menu {
         }
 
         @Override
-        public String getName() {
+        public String getParentName() {
             return name;
         }
 
@@ -81,9 +89,7 @@ public class SimpleMenu implements Menu {
     }
 
     private class DFSIterator implements Iterator<ItemInfo> {
-
         Deque<MenuItem> stack = new LinkedList<>();
-
         Deque<String> numbers = new LinkedList<>();
 
         DFSIterator() {
@@ -108,16 +114,13 @@ public class SimpleMenu implements Menu {
             String lastNumber = numbers.removeFirst();
             List<MenuItem> children = current.getChildren();
             int currentNumber = children.size();
-
-            /**
-             * for (var i = children.listIterator(children.size()); i.hasPrevious(); ) {
-             *   stack.addFirst(i.previous());
-             *   numbers.addFirst(lastNumber.concat(String.valueOf(currentNumber--)).concat("."));
-             *   }
-            */
+            var listIterator = children.listIterator(children.size());
+            while (listIterator.hasPrevious()) {
+                stack.addFirst(listIterator.previous());
+                numbers.addFirst(lastNumber.concat(String.valueOf(currentNumber--)).concat("."));
+            }
             return new ItemInfo(current, lastNumber);
         }
-
     }
 
     private class ItemInfo {

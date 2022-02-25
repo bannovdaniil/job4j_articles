@@ -14,15 +14,14 @@ public interface Menu extends Iterable<Menu.MenuItemInfo> {
     Optional<MenuItemInfo> select(String itemName);
 
     class MenuItemInfo {
-
         private final String name;
         private final List<String> children;
         private final ActionDelegate actionDelegate;
         private final String number;
 
         public MenuItemInfo(MenuItem menuItem, String number) {
-            this.name = menuItem.getName();
-            this.children = menuItem.getChildren().stream().map(MenuItem::getName).collect(Collectors.toList());
+            this.name = menuItem.getParentName();
+            this.children = menuItem.getChildren().stream().map(MenuItem::getParentName).collect(Collectors.toList());
             this.actionDelegate = menuItem.getActionDelegate();
             this.number = number;
         }
