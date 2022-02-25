@@ -7,7 +7,6 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-//        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         boolean result = false;
         if (Menu.ROOT.equals(parentName)) {
             result = rootElements.add(new Item(childName, actionDelegate));
