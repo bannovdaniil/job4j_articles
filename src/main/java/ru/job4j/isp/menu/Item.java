@@ -15,9 +15,7 @@ public class Item implements MenuItem {
     }
 
     public boolean addSubItem(String parentName, String childName, ActionDelegate actionDelegate) {
-        this.parentName = parentName;
-        this.actionDelegate = actionDelegate;
-        return this.children.add(new Item(childName, actionDelegate));
+        return parentName.equals(this.parentName) && this.children.add(new Item(childName, actionDelegate));
     }
 
     @Override
