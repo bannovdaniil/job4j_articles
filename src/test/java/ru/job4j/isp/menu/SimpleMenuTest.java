@@ -61,14 +61,11 @@ public class SimpleMenuTest {
                 + "---- Купить шляпу 1.2.1." + ln
                 + "Покормить собаку 2." + ln;
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-
         PrintStream systemOut = System.out;
         ByteArrayOutputStream testOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(testOut));
-        MenuPrinter.print(menu);
+        ItemsPrinter itemsPrinter = new ItemsPrinter();
+        itemsPrinter.print(menu);
         System.setOut(systemOut);
 
         assertEquals(expect, testOut.toString());
